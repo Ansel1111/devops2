@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Tareas</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        #tasks {
+            list-style-type: none;
+            padding: 0;
+        }
+        .task {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 5px;
+        }
+        .task input {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Gestión de Tareas</h1>
+    <input type="text" id="newTask" placeholder="Nueva tarea">
+    <button onclick="agregarTarea()">Agregar Tarea</button>
+    <ul id="tasks"></ul>
+
+    <script>
+        function agregarTarea() {
+            const nuevaTarea = document.getElementById('newTask').value;
+            if (nuevaTarea.trim() !== '') {
+                const listaTareas = document.getElementById('tasks');
+                const tareaElemento = document.createElement('li');
+                tareaElemento.className = 'task';
+                tareaElemento.innerHTML = `
+                    <input type="checkbox" onchange="completarTarea(this)">
+                    <span>${nuevaTarea}</span>
+                    <button onclick="eliminarTarea(this)">Eliminar</button>
+                `;
+                listaTareas.appendChild(tareaElemento);
+                document.getElementById('newTask').value = '';
+            }
+        }
+
+        function completarTarea(checkbox) {
+            const tareaElemento = checkbox.parentElement;
+            tareaElemento.classList.toggle('completada');
+        }
+
+        function eliminarTarea(botonEliminar) {
+            const tareaElemento = botonEliminar.parentElement;
+            tareaElemento.remove();
+        }
+    </script>
+</body>
+</html>
